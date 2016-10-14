@@ -1,0 +1,117 @@
+<HTML>
+<HEAD>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+
+</HEAD>
+<BODY>
+<div id="login">
+	<h1>Log In</h1> 
+	<label>Username:</label>
+	<input type="text" id="username" />
+	<label>Password:</label>
+	<input type="text" id="password" />
+	<button id="submit" /> Submit </button>
+</div>
+
+<div id="posts"></div>
+
+<script>  
+$(document).ready(function() { 
+ 
+$("#submit").click (function () {  
+   $.ajax({type:"POST",
+  		url: "checkLogin.php", 
+		data: {username :  $('#username').val(), password: $('#password').val()},  
+		success: function(data,status) { 
+			console.log(data);
+			if (data == 1) {
+				getPosts();
+			}
+		}
+   }); 
+}); 
+
+getPosts = function() {
+	console.log("begin getting posts");
+	$.ajax({type:"POST",
+  		url: "viewPosts.php", 
+		data: {username:$('#username').val()},  
+		success: function(data,status) { 
+			console.log(data);
+			$("#login").hide();
+			$("#posts").html(data);
+		}
+   }); 
+}
+
+makeNewPost = function() {
+	console.log("making new post");
+	var post_text = prompt("Enter the post text", "");
+	
+	var post = {content:post_text, num:-1}
+    $.ajax({type:"POST",
+  		url: "updatePosts.php", 
+		data: post,  
+		success: function(data,status) { 
+			console.log(data);
+			getPosts();
+		}
+   }); 
+}
+
+editExistingPost = function(number) {
+	console.log("editing post: " + number);
+	var post_text = prompt("Enter the new post text", "text");
+	
+	var post = {content:post_text, num:number}
+    $.ajax({type:"POST",
+  		url: "updatePosts.php", 
+		data: post,  
+		success: function(data,status) { 
+			console.log(data);
+			getPosts();
+		}
+   }); 
+}
+
+deleteExistingPost = function(number) {
+	var post = {content:"", num:number}
+    $.ajax({type:"POST",
+  		url: "updatePosts.php", 
+		data: post,  
+		success: function(data,status) { 
+			console.log(data);
+			getPosts();
+		}
+   }); 
+}
+
+sendMessage = function(number) {
+	var reciever = prompt("Enter the username of the reciever", "");
+	var body = prompt("Enter the message", "");
+	var post = {body:body, reciever:reciever}
+    $.ajax({type:"POST",
+  		url: "sendMessage.php", 
+		data: post,  
+		success: function(data,status) { 
+			console.log(data);
+		}
+   }); 
+}
+
+logout = function() {
+    $.ajax({type:"POST",
+  		url: "logout.php", 
+		data: "",  
+		success: function(data,status) { 
+			location.reload();
+		}
+   }); 
+}
+
+}); // end of document ready function 
+
+</script>
+
+</BODY>
+</HTML>

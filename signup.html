@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+
+</head>
+<body>
+<h1>Sign Up</h1>
+
+<label>Username:</label>
+<input type="text" id="username" />
+
+<label>Password:</label>
+<input type="text" id="password" />
+
+<button id="submit" /> Submit </button>
+
+<div id="loading" ><p>Loading.....</p></div>
+
+
+<script>  
+$(document).ready(function() { 
+$("#loading").hide();
+var btn1 = $("#submit"); 
+ 
+btn1.click (function () { 
+  //this is super slow, should add a spinner or something
+  $("#loading").show();
+  $.ajax({type:"POST",
+  		url: "signUp.php", 
+		data: {username :  $('#username').val(), password: $('#password').val()},  
+		success: function(data,status) { 
+			console.log(data);
+			if (data == "success") {
+				window.location.href = "/login.html";
+			}
+		}
+   }); 
+}); 
+
+}); // end of document ready function 
+
+</script>
+
+
+</body>
+</html>

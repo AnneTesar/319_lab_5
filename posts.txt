@@ -1,0 +1,1 @@
+{"1":{"user":"name","content":"This is a new post","num":2},"2":{"user":"name2","content":"My first post as name2","num":3},"3":{"user":"name","content":"This post should be at the top","num":4}}
