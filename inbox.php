@@ -13,8 +13,21 @@ session_start();
 $username = $_SESSION["username"];
 
 //take user's private key
-//decrypt messages in message.txt
-//display messages
+$private_key = $_SESSION["private_key"];
 
+//decrypt messages in message.txt
+$file = "messages.txt";
+$message_data = json_decode(file_get_contents($file), true);
+
+$messages_html = "";
+foreach ($message_data as $message) {
+	if (strcmp($message["reciever"], $username) == 0) {
+		//decode message
+		//display message
+		echo $message["body"];
+	}
+}
+
+echo $messages_html;
 	
 ?>

@@ -10,17 +10,67 @@ Alice; Receiver: BOB; Body: dshgkfjsghfjksghjkf
 - Make sure that you store the encrypted message in messages.txt file
 */
 
-//ui
+$path = 'phpseclib';
+	set_include_path(get_include_path() . PATH_SEPARATOR . $path);
+	include_once('Crypt/RSA.php');
 
 session_start();
 $username = $_SESSION["username"];
 $reciever = $_REQUEST["reciever"];
 $body = $_REQUEST["body"];
 
+$public_key = -1;
+
 //get reciever's public key
+	$all_users = $_SESSION["all_users"];
+	foreach ($all_users as $user) {
+		if (strcmp($user["username"], $reciever) == 0) {
+			$public_key = $user["public_key"];
+		}
+	}
+	//find matchign username
+	//get that public key
+
+if ($public_key == -1) {
+	echo "FAILED SOMEWHERE";
+}
+else {
+	echo "GOT KEY WHAT UP \n";
+	echo $public_key;
+}
+
 //encrypt message
+$encrypted_body = $body; // rsa_encrypt($body, $public_key);
+
+echo $encrypted_body;
+
 //put in messages.txt
+$file = "messages.txt";
+$message_data = json_decode(file_get_contents($file), true);
+
+$new_message = array('sender' => $username, 'reciever' => $reciever, 'body' => $encrypted_body);
+array_push($message_data, $new_message);
+
+$json = json_encode($message_data);
+		
+file_put_contents($file, $json);
 
 
+
+
+
+
+
+//Function for encrypting with RSA
+function rsa_encrypt($string, $public_key)
+{
+    //Create an instance of the RSA cypher and load the key into it
+    $cipher = new Crypt_RSA();
+    $cipher->loadKey($public_key);
+    //Set the encryption mode
+    $cipher->setEncryptionMode(CRYPT_RSA_ENCRYPTION_PKCS1);
+    //Return the encrypted version
+    return $cipher->encrypt($string);
+}
 	
 ?>

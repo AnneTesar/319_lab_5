@@ -25,6 +25,7 @@ $("#submit").click (function () {
 		success: function(data,status) { 
 			console.log(data);
 			if (data == 1) {
+				getInbox();
 				getPosts();
 			}
 		}
@@ -93,6 +94,16 @@ sendMessage = function(number) {
     $.ajax({type:"POST",
   		url: "sendMessage.php", 
 		data: post,  
+		success: function(data,status) { 
+			console.log(data);
+		}
+   }); 
+}
+
+getInbox = function(number) {
+    $.ajax({type:"POST",
+  		url: "inbox.php", 
+		data: "",  
 		success: function(data,status) { 
 			console.log(data);
 		}
