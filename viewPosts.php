@@ -19,7 +19,10 @@ $username = $_SESSION["username"];
 
 	$post_html = "";
 	$post_html .= '<button onclick="makeNewPost()">Make New Post</button>';
-	$post_html .= '<button onclick="sendMessage()">Send a Message</button>';
+	
+	if (strcmp($username, "admin") != 0) {
+		$post_html .= '<button onclick="sendMessage()">Send a Message</button>';
+	}
 
 	$post_data = json_decode(file_get_contents('posts.txt'), true);
 	

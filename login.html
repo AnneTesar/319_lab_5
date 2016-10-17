@@ -1,7 +1,7 @@
 <HTML>
 <HEAD>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
-
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 </HEAD>
 <BODY>
 <div id="login">
@@ -12,6 +12,9 @@
 	<input type="text" id="password" />
 	<button id="submit" /> Submit </button>
 </div>
+
+
+<div id="messages"></div>
 
 <div id="posts"></div>
 
@@ -106,6 +109,7 @@ getInbox = function(number) {
 		data: "",  
 		success: function(data,status) { 
 			console.log(data);
+			$("#messages").html(data);
 		}
    }); 
 }

@@ -42,6 +42,7 @@ $public_key = $publickey;
 //Test out the rsa encryption functions
 $plaintext = "This is some plaintext to encrypt";
 $ciphertext = rsa_encrypt($plaintext, $public_key);
+echo $ciphertext;
 $decipheredtext = rsa_decrypt($ciphertext, $private_key);
 
 //Echo out results

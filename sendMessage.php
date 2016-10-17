@@ -40,15 +40,18 @@ else {
 }
 
 //encrypt message
-$encrypted_body = $body; // rsa_encrypt($body, $public_key);
+$encrypted_body = rsa_encrypt($body, $public_key);
 
-echo $encrypted_body;
+echo "\Encrypted String: " . $encrypted_body;
 
 //put in messages.txt
 $file = "messages.txt";
 $message_data = json_decode(file_get_contents($file), true);
 
-$new_message = array('sender' => $username, 'reciever' => $reciever, 'body' => $encrypted_body);
+$new_message = array('sender' => $username, 'reciever' => $reciever, 'body' => base64_encode($encrypted_body));
+echo $new_message['body'];
+//$new_message = array_map('utf8_encode', $new_message);
+//$new_message = base64_encode($new_message);
 array_push($message_data, $new_message);
 
 $json = json_encode($message_data);
