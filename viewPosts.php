@@ -32,6 +32,7 @@ $username = $_SESSION["username"];
 		$post_html .= '<div style="width:75%; background:gray;">';
 		$post_html .= '<h3>' . $post['user'] . '</h3>';
 		$post_html .= '<p>' . $post['content'] . '</p>'; //onclick="editPost(content, num)">
+		$post_html .= '<p>' .$post['date'] . '</p>';
 		$num = $post['num'];
 		if ((strcmp($username, "admin") == 0) || (strcmp($username, $post['user']) == 0)) {
 			$post_html .= '<button onclick="editExistingPost('.$num.')">Edit</button>';

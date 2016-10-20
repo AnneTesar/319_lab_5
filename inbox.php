@@ -16,23 +16,30 @@ $username = $_SESSION["username"];
 
 //take user's private key
 $private_key = $_SESSION["private_key"];
+//echo "Private key: " . $private_key;
 
 //decrypt messages in message.txt
 $file = "messages.txt";
 $message_data = json_decode(file_get_contents($file), true);
 
 $messages_html = "<h3>Private Messages: </h3>";
-foreach ($message_data as $message) {
-	if (strcmp($message["reciever"], $username) == 0) {
-		//echo "Message Body: " . $message["body"];
-		$body = base64_decode($message["body"]);
-		$decipheredtext = "test"; //rsa_decrypt($body, $private_key); TODO this decryption causes errors.
-		//echo "\nDeciphered: " . $decipheredtext;
-		$messages_html .= '<div style="width:75%; background:blue;">';
-		$messages_html .= '<h3>Message From ' . $message['sender'] . '</h3>';
-		$messages_html .= '<p>' . $decipheredtext . '</p>';
+if ($message_data != null) {
+	foreach ($message_data as $message) {
+		if (strcmp($message["reciever"], $username) == 0) {
+			//echo "\nMessage Body: " . $message["body"];
+			$body = base64_decode($message["body"]);
+			//echo "\n64 decode" . $body;
+			$decipheredtext = "test...buggy decryption"; //rsa_decrypt($body, $private_key); //TODO this decryption causes errors.
+			//This decryption should really be working here. Before and after the base_64 decode seem to match encryption side from
+			//sendMessage.php
+			//echo "\nDeciphered: " . $decipheredtext;
+			$messages_html .= '<div style="width:75%; background:blue;">';
+			$messages_html .= '<h3>Message From ' . $message['sender'] . '</h3>';
+			$messages_html .= '<p>' . $decipheredtext . '</p>';
+		}
 	}
 }
+
 
 echo $messages_html;
 

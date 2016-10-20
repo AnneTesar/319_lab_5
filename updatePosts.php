@@ -18,6 +18,8 @@ $num = $_REQUEST["num"];
 
 $file = 'posts.txt';
 $all_posts = json_decode(file_get_contents($file), true);
+date_default_timezone_set('America/Chicago');
+$date = date('M jS Y h:i:s A' , mktime());
 
 if ($num != -1) {
 	if (strcmp($content, "") == 0) { //deleting post
@@ -39,10 +41,10 @@ if ($num != -1) {
 	}
 	
 }
-else {
+else { //new post
 	$new_num = end($all_posts)['num'];
 	$new_num = $new_num+1;
-	$new_post = array('user' => $user, 'content' => $content, 'num' => $new_num);
+	$new_post = array('user' => $user, 'content' => $content, 'num' => $new_num, 'date' => $date);
 	array_push($all_posts, $new_post);
 }
 
