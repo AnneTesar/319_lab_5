@@ -1,1 +1,1 @@
-{"1":{"user":"name","content":"This is a new post","num":2},"2":{"user":"name2","content":"My first post as name2","num":3},"3":{"user":"name","content":"This post should be at the top","num":4}}
+[{"user":"name","content":"This is the first post","num":1,"date":"Oct 20th 2016 03:47:47 AM"},{"user":"name","content":"Changed the time a little","num":2,"date":"Oct 20th 2016 03:52:45 AM"},{"user":"name2","content":"Really fixed the time now","num":3,"date":"Oct 19th 2016 10:59:28 PM"}]
